@@ -7,6 +7,8 @@
 
 #ifndef _BLOOM_H
 #define _BLOOM_H
+#define BLOOM_VERSION_MAJOR 2
+#define BLOOM_VERSION_MINOR 0
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +37,7 @@ struct bloom
   unsigned long int bits;
   unsigned long int bytes;
   unsigned char hashes;
+  unsigned long int trunc_bits;
   double error;
 
   // Fields below are private to the implementation. These may go away or
@@ -224,6 +227,10 @@ int bloom_load(struct bloom * bloom, char * filename);
  *
  */
 int bloom_merge(struct bloom * bloom_dest, struct bloom * bloom_src);
+
+void bloom_truncate(struct bloom * bloom, int new_bits);
+
+unsigned long int bloom_size_after_truncation(struct bloom * bloom);
 
 
 /** ***************************************************************************
